@@ -101,6 +101,7 @@ class ForumDataStore {
         upvotes: 47,
         downvotes: 3,
         commentCount: 12,
+        isEdited: false,
         tags: ['comparison', 'review', 'claude'],
         modelRating: 4.2
       },
@@ -116,6 +117,7 @@ class ForumDataStore {
         upvotes: 23,
         downvotes: 1,
         commentCount: 8,
+        isEdited: false,
         tags: ['review', 'first-impressions'],
         modelRating: 4.0
       },
@@ -131,6 +133,7 @@ class ForumDataStore {
         upvotes: 31,
         downvotes: 2,
         commentCount: 15,
+        isEdited: false,
         tags: ['prompting', 'techniques', 'speculation']
       },
       {
@@ -145,6 +148,7 @@ class ForumDataStore {
         upvotes: 89,
         downvotes: 7,
         commentCount: 34,
+        isEdited: false,
         tags: ['tools', 'productivity', 'recommendations']
       }
     ]
