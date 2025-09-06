@@ -6,6 +6,7 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 import ToolCard from '@/components/ToolCard'
 import NewsItem from '@/components/NewsItem'
 import PersonaInsightCard from '@/components/PersonaInsightCard'
+import ActionableAdvice from '@/components/ActionableAdvice'
 import { ToolsResponse, NewsResponse, Tool, NewsItem as NewsItemType } from '@/types'
 
 export default function PlanClient() {
@@ -124,7 +125,7 @@ export default function PlanClient() {
             </div>
           </div>
 
-          <div className="grid gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {tools.map((tool, index) => (
               <ToolCard key={index} tool={tool} />
             ))}
@@ -135,6 +136,9 @@ export default function PlanClient() {
         <div className="lg:col-span-1 space-y-8">
           {/* Persona Insights */}
           <PersonaInsightCard persona={persona!} />
+
+          {/* Actionable Advice */}
+          <ActionableAdvice persona={persona!} role={role!} />
 
           {/* AI News */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">

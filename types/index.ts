@@ -171,3 +171,20 @@ export const CreateCommentSchema = z.object({
 })
 
 export type CreateComment = z.infer<typeof CreateCommentSchema>
+
+// Advice Types
+export const AdviceItemSchema = z.object({
+  category: z.string(),
+  title: z.string(),
+  steps: z.array(z.string()).min(3).max(5),
+  tools: z.array(z.string()),
+  timeEstimate: z.string()
+})
+
+export type AdviceItem = z.infer<typeof AdviceItemSchema>
+
+export const AdviceResponseSchema = z.object({
+  advice: z.array(AdviceItemSchema).min(4).max(6)
+})
+
+export type AdviceResponse = z.infer<typeof AdviceResponseSchema>
