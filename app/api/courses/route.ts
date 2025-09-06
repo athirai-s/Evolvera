@@ -29,9 +29,9 @@ function checkRateLimit(ip: string): boolean {
   return true
 }
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
-})
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+}) : null
 
 const systemPrompt = `You are an assistant that creates course search links for AI tools.
 
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Fall back to AI generation if no curated courses found
-    if (!process.env.OPENAI_API_KEY) {
+    if (!openai) {
       throw new Error('OpenAI API key not configured')
     }
 
