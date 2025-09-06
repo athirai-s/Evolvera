@@ -66,6 +66,9 @@ Use ratings between 4.0-4.8 and realistic durations.
 Return 3-4 courses with variety across platforms. JSON ONLY.`
 
 export async function POST(request: NextRequest) {
+  let body: any = {}
+  let toolName = ''
+  
   try {
     const ip = request.ip || 'unknown'
     
@@ -76,8 +79,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const body = await request.json()
-    const { toolName, persona, role } = requestSchema.parse(body)
+    body = await request.json()
+    const parsed = requestSchema.parse(body)
+    toolName = parsed.toolName
 
     // First, try to get courses from our curated database
     const curatedCourses = getCoursesForTool(toolName)
@@ -93,7 +97,7 @@ export async function POST(request: NextRequest) {
     }
 
     const userContent = `Tool: "${toolName}"
-${persona && role ? `User Context: ${persona} working as ${role}` : ''}
+${parsed.persona && parsed.role ? `User Context: ${parsed.persona} working as ${parsed.role}` : ''}
 
 Create 3-4 course search URLs for learning ${toolName}:
 
@@ -160,16 +164,16 @@ Return JSON ONLY with working search URLs.`
     // Return fallback courses if API fails
     const fallbackCourses = [
       {
-        title: `Learn ${request.body?.toolName || 'AI Tool'} - Beginner Tutorial`,
+        title: `Learn ${toolName || body?.toolName || 'AI Tool'} - Beginner Tutorial`,
         platform: 'YouTube' as const,
-        url: `https://www.youtube.com/results?search_query=${encodeURIComponent(request.body?.toolName || 'AI tutorial')}`,
+        url: `https://www.youtube.com/results?search_query=${encodeURIComponent(toolName || body?.toolName || 'AI tutorial')}`,
         rating: 4.2,
         duration: '30 mins'
       },
       {
-        title: `${request.body?.toolName || 'AI Tool'} Complete Course`,
+        title: `${toolName || body?.toolName || 'AI Tool'} Complete Course`,
         platform: 'Udemy' as const,
-        url: `https://www.udemy.com/courses/search/?q=${encodeURIComponent(request.body?.toolName || 'AI')}`,
+        url: `https://www.udemy.com/courses/search/?q=${encodeURIComponent(toolName || body?.toolName || 'AI')}`,
         rating: 4.4,
         duration: '3 hours'
       }
