@@ -162,7 +162,8 @@ class ForumDataStore {
         postId: '1',
         createdAt: new Date(Date.now() - 82800000).toISOString(),
         upvotes: 12,
-        downvotes: 0
+        downvotes: 0,
+        isEdited: false
       },
       {
         id: 'c2',
@@ -172,7 +173,8 @@ class ForumDataStore {
         postId: '2',
         createdAt: new Date(Date.now() - 3600000).toISOString(),
         upvotes: 5,
-        downvotes: 0
+        downvotes: 0,
+        isEdited: false
       },
       {
         id: 'c3',
@@ -182,7 +184,8 @@ class ForumDataStore {
         postId: '4',
         createdAt: new Date(Date.now() - 86400000).toISOString(),
         upvotes: 18,
-        downvotes: 1
+        downvotes: 1,
+        isEdited: false
       }
     ]
 
