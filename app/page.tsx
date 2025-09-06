@@ -1,117 +1,111 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import PersonaCard from '@/components/PersonaCard'
-import { PersonaData, Persona } from '@/types'
+import Link from 'next/link'
 
-const personas: PersonaData[] = [
-  {
-    id: 'student',
-    emoji: '🎓',
-    title: 'Student',
-    subtitle: 'overworked undergrad who wants AI to finish assignments'
-  },
-  {
-    id: 'silver-surfer',
-    emoji: '👴',
-    title: 'Silver Surfer (50–60)',
-    subtitle: "doesn't want to be left behind"
-  },
-  {
-    id: 'non-tech',
-    emoji: '👩‍💼',
-    title: 'Non-tech builder',
-    subtitle: 'big ideas, no CS background'
-  },
-  {
-    id: 'artist',
-    emoji: '🎨',
-    title: 'Doodle-to-DaVinci Artist',
-    subtitle: 'turn stick figures into Pixar art'
-  },
-  {
-    id: 'wannabe-hacker',
-    emoji: '💻',
-    title: 'Wannabe Hacker',
-    subtitle: 'can\'t code "Hello World," but wants to sound smart'
-  },
-  {
-    id: 'spreadsheet-samurai',
-    emoji: '📊',
-    title: 'Spreadsheet Samurai',
-    subtitle: 'Excel warrior dreaming of AI macros'
-  }
-]
-
-export default function PersonaSelect() {
-  const [selectedPersona, setSelectedPersona] = useState<Persona | null>(null)
+export default function HomePage() {
+  const { data: session, status } = useSession()
   const router = useRouter()
 
-  const handlePersonaSelect = (persona: Persona) => {
-    setSelectedPersona(persona)
+  useEffect(() => {
+    if (status === 'loading') return
+    
+    if (session) {
+      router.push('/plan')
+    }
+  }, [session, status, router])
+
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      </div>
+    )
   }
 
-  const handleContinue = () => {
-    if (selectedPersona) {
-      router.push(`/role?persona=${selectedPersona}`)
-    }
+  if (session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      </div>
+    )
   }
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
-          🎯 Choose Your Persona
-        </h1>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Select the persona that best describes you to get personalized AI tool recommendations.
-        </p>
-      </div>
-
-      <div className="max-w-2xl mx-auto mb-8">
-        <div className="bg-white rounded-3xl shadow-lg border border-purple-100 overflow-hidden">
-          {personas.map((persona, index) => (
-            <button
-              key={persona.id}
-              onClick={() => handlePersonaSelect(persona.id)}
-              className={`w-full text-left p-6 transition-all duration-200 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 border-b border-purple-50 last:border-b-0 focus:outline-none focus:bg-gradient-to-r focus:from-purple-50 focus:to-pink-50 ${
-                selectedPersona === persona.id
-                  ? 'bg-gradient-to-r from-purple-100 to-pink-100 shadow-inner'
-                  : ''
-              }`}
-            >
-              <div className="flex items-center space-x-4">
-                <div className="text-3xl flex-shrink-0">{persona.emoji}</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-1">{persona.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{persona.subtitle}</p>
-                </div>
-                <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 transition-all duration-200 ${
-                  selectedPersona === persona.id
-                    ? 'bg-purple-500 border-purple-500 shadow-lg'
-                    : 'border-gray-300 hover:border-purple-400'
-                }`}>
-                  {selectedPersona === persona.id && (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </button>
-          ))}
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="max-w-4xl mx-auto text-center">
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
+            🚀 AI Pathfinder
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-600 mb-4">
+            Discover the Perfect AI Tools for Your Journey
+          </p>
+          <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            Get personalized AI tool recommendations tailored to your role and persona. 
+            From students to professionals, find the perfect AI assistants to supercharge your workflow.
+          </p>
         </div>
-      </div>
 
-      <div className="text-center">
-        <button
-          onClick={handleContinue}
-          disabled={!selectedPersona}
-          className="rounded-full px-8 py-4 font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-purple-200 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
-        >
-          Continue to Role Selection →
-        </button>
+        <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
+          {/* Features */}
+          <div className="bg-white rounded-2xl shadow-lg border border-purple-100 p-6">
+            <div className="text-4xl mb-4">🎯</div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Personalized Recommendations</h3>
+            <p className="text-sm text-gray-600">AI tools curated for your specific role and persona</p>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-lg border border-purple-100 p-6">
+            <div className="text-4xl mb-4">💡</div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Actionable Guidance</h3>
+            <p className="text-sm text-gray-600">Step-by-step instructions for each recommended tool</p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/auth/signup" 
+              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-4 px-8 rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-center"
+            >
+              🌟 Get Started Free
+            </Link>
+            <Link 
+              href="/auth/signin" 
+              className="border-2 border-purple-300 text-purple-600 font-semibold py-4 px-8 rounded-full hover:bg-purple-50 transition-all duration-200 text-center"
+            >
+              Already have an account? Sign In
+            </Link>
+          </div>
+          
+          <p className="text-sm text-gray-500">
+            Join thousands discovering their perfect AI toolkit
+          </p>
+        </div>
+
+        {/* Sample Personas Preview */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-8">
+            Choose Your Persona
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { emoji: '🎓', title: 'Student' },
+              { emoji: '👴', title: 'Silver Surfer' },
+              { emoji: '👩‍💼', title: 'Non-tech Builder' },
+              { emoji: '🎨', title: 'Artist' },
+              { emoji: '💻', title: 'Developer' },
+              { emoji: '📊', title: 'Data Analyst' }
+            ].map((persona, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-md border border-purple-100 p-4 hover:shadow-lg transition-shadow">
+                <div className="text-3xl mb-2">{persona.emoji}</div>
+                <div className="text-sm font-medium text-gray-700">{persona.title}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

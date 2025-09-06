@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import React from 'react'
 import './globals.css'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import AuthSessionProvider from '@/components/SessionProvider'
 
 export const metadata: Metadata = {
   title: 'AI Pathfinder',
@@ -17,13 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <AuthSessionProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+          </div>
+        </AuthSessionProvider>
       </body>
     </html>
   )

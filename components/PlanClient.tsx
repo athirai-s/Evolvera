@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import ToolCard from '@/components/ToolCard'
 import NewsItem from '@/components/NewsItem'
@@ -15,13 +17,13 @@ export default function PlanClient() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const persona = searchParams.get('persona')
-  const role = searchParams.get('role')
+  const { data: session, status } = useSession()
 
   useEffect(() => {
-    if (!persona || !role) {
-      router.push('/')
+    if (status === 'loading') return
+    
+    if (!session) {
+      router.push('/auth/signin')
       return
     }
 
@@ -36,7 +38,10 @@ export default function PlanClient() {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ persona, role }),
+            body: JSON.stringify({ 
+              persona: session.user.persona, 
+              role: session.user.role 
+            }),
           }),
           fetch('/api/news')
         ])
@@ -65,7 +70,7 @@ export default function PlanClient() {
     }
 
     fetchData()
-  }, [persona, role, router])
+  }, [session, status, router])
 
   if (loading) {
     return (
@@ -109,36 +114,35 @@ export default function PlanClient() {
           🚀 Your AI-Powered Journey
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Here are the perfect AI tools curated specifically for your needs as a <span className="font-medium text-purple-600">{role}</span>.
+          Here are the perfect AI tools curated specifically for your needs as a <span className="font-medium text-purple-600">{session?.user.role}</span>.
         </p>
       </div>
 
       <div className="grid lg:grid-cols-4 gap-8">
         {/* Main Content */}
-        <div className="lg:col-span-3">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900">
-              🛠️ Recommended AI Tools
-            </h2>
-            <div className="text-sm text-gray-600 bg-gradient-to-r from-purple-50 to-pink-50 px-4 py-2 rounded-full border border-purple-100">
-              {tools.length} tools found
+        <div className="lg:col-span-3 space-y-8">
+          {/* Actionable Advice */}
+          {session && (
+            <ActionableAdvice persona={session.user.persona} role={session.user.role} />
+          )}
+
+          {/* Recommended Tools */}
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-semibold text-gray-900">
+                🛠️ Recommended AI Tools
+              </h2>
+              <div className="text-sm text-gray-600 bg-gradient-to-r from-purple-50 to-pink-50 px-4 py-2 rounded-full border border-purple-100">
+                {tools.length} tools found
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {tools.map((tool, index) => (
+                <ToolCard key={index} tool={tool} />
+              ))}
             </div>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {tools.map((tool, index) => (
-              <ToolCard key={index} tool={tool} />
-            ))}
-          </div>
-        </div>
-
-        {/* Sidebar */}
-        <div className="lg:col-span-1 space-y-8">
-          {/* Persona Insights */}
-          <PersonaInsightCard persona={persona!} />
-
-          {/* Actionable Advice */}
-          <ActionableAdvice persona={persona!} role={role!} />
 
           {/* AI News */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
@@ -151,6 +155,14 @@ export default function PlanClient() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="lg:col-span-1 space-y-8">
+          {/* Persona Insights */}
+          {session && (
+            <PersonaInsightCard persona={session.user.persona} />
+          )}
 
           {/* Quick Actions */}
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
@@ -158,19 +170,19 @@ export default function PlanClient() {
               🎯 Quick Actions
             </h3>
             <div className="space-y-3">
+              <Link 
+                href="/forum"
+                className="block w-full text-left px-4 py-3 bg-white rounded-xl hover:shadow-md transition-all duration-200 border border-purple-100 hover:border-purple-200"
+              >
+                <div className="font-medium text-gray-900">🗣️ Join Community</div>
+                <div className="text-sm text-gray-600">Connect with other AI enthusiasts</div>
+              </Link>
               <button 
-                onClick={() => router.push('/')}
+                onClick={() => router.push('/auth/signup')}
                 className="w-full text-left px-4 py-3 bg-white rounded-xl hover:shadow-md transition-all duration-200 border border-purple-100 hover:border-purple-200"
               >
-                <div className="font-medium text-gray-900">🔄 Try Different Persona</div>
-                <div className="text-sm text-gray-600">Explore tools for other roles</div>
-              </button>
-              <button 
-                onClick={() => router.push(`/role?persona=${persona}`)}
-                className="w-full text-left px-4 py-3 bg-white rounded-xl hover:shadow-md transition-all duration-200 border border-purple-100 hover:border-purple-200"
-              >
-                <div className="font-medium text-gray-900">💼 Change Role</div>
-                <div className="text-sm text-gray-600">Update your profession</div>
+                <div className="font-medium text-gray-900">💼 Update Profile</div>
+                <div className="text-sm text-gray-600">Change your role or persona</div>
               </button>
             </div>
           </div>

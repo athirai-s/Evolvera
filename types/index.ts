@@ -188,3 +188,33 @@ export const AdviceResponseSchema = z.object({
 })
 
 export type AdviceResponse = z.infer<typeof AdviceResponseSchema>
+
+// Auth Types
+export const UserSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  persona: z.string(),
+  role: z.string(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional()
+})
+
+export type User = z.infer<typeof UserSchema>
+
+export const SignupFormSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(100),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  persona: z.string().min(1, 'Please select a persona'),
+  role: z.string().min(1, 'Please enter your role')
+})
+
+export type SignupForm = z.infer<typeof SignupFormSchema>
+
+export const SigninFormSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required')
+})
+
+export type SigninForm = z.infer<typeof SigninFormSchema>
