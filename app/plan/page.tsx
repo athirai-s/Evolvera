@@ -8,6 +8,9 @@ import NewsItem from '@/components/NewsItem'
 import PersonaInsightCard from '@/components/PersonaInsightCard'
 import { ToolsResponse, NewsResponse, Tool, NewsItem as NewsItemType } from '@/types'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 export default function Plan() {
   const [tools, setTools] = useState<Tool[]>([])
   const [news, setNews] = useState<NewsItemType[]>([])

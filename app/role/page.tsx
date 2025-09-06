@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import RolePills from '@/components/RolePills'
 import { RoleData } from '@/types'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 const commonRoles: RoleData[] = [
   { id: 'nurse', name: 'Nurse' },
   { id: 'accountant', name: 'Accountant' },
