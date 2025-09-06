@@ -134,7 +134,7 @@ export default function PlanClient() {
         {/* Sidebar */}
         <div className="lg:col-span-1 space-y-8">
           {/* Persona Insights */}
-          <PersonaInsightCard persona={persona!} role={role!} />
+          <PersonaInsightCard persona={persona!} />
 
           {/* AI News */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
