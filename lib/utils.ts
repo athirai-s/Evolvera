@@ -33,3 +33,9 @@ export function generateShareUrl(persona: string, role: string): string {
   
   return `${baseUrl}/plan?persona=${encodeURIComponent(persona)}&role=${encodeURIComponent(role)}`
 }
+
+export function toTitleCase(str: string): string {
+  return str.replace(/\w\S*/g, (txt) => 
+    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  )
+}

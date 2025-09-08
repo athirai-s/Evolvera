@@ -10,6 +10,7 @@ import NewsItem from '@/components/NewsItem'
 import PersonaInsightCard from '@/components/PersonaInsightCard'
 import ActionableAdvice from '@/components/ActionableAdvice'
 import { ToolsResponse, NewsResponse, Tool, NewsItem as NewsItemType } from '@/types'
+import { toTitleCase } from '@/lib/utils'
 
 export default function PlanClient() {
   const [tools, setTools] = useState<Tool[]>([])
@@ -114,7 +115,7 @@ export default function PlanClient() {
           🚀 Your AI-Powered Journey
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Here are the perfect AI tools curated specifically for your needs as a <span className="font-medium text-purple-600">{session?.user.role}</span>.
+          Here are the perfect AI tools curated specifically for your needs as a <span className="font-medium text-purple-600">{session?.user.role && toTitleCase(session.user.role)}</span>.
         </p>
       </div>
 

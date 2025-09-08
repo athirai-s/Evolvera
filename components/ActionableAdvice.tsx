@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import { AdviceResponse, AdviceItem } from '@/types'
+import { toTitleCase } from '@/lib/utils'
 
 interface ActionableAdviceProps {
   persona: string
@@ -72,7 +73,7 @@ export default function ActionableAdvice({ persona, role }: ActionableAdviceProp
   return (
     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-lg border border-blue-100 p-6">
       <h3 className="text-xl font-semibold mb-6 text-gray-900 flex items-center">
-        💡 Actionable AI Advice for {role}
+        💡 Actionable AI Advice for {toTitleCase(role)}
       </h3>
       
       <div className="space-y-6">
