@@ -15,9 +15,9 @@ export default function Header() {
             <Image
               src="/logo.png"
               alt="Pathify.ai"
-              width={40}
-              height={40}
-              className="h-10 w-auto brightness-0 invert"
+              width={60}
+              height={60}
+              className="h-12 w-auto"
             />
           </Link>
           <div className="flex items-center space-x-6">
