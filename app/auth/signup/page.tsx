@@ -119,7 +119,7 @@ export default function SignUp() {
       <div className="bg-white rounded-3xl shadow-lg border border-purple-100 p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-semibold tracking-tight mb-4">
-            ✨ Join AI Pathfinder
+            ✨ Join Pathify.ai
           </h1>
           <p className="text-gray-600">
             Create your account and get personalized AI tool recommendations.

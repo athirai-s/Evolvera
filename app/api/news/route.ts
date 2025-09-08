@@ -5,7 +5,7 @@ import { NewsResponseSchema, NewsItem } from '@/types'
 const parser = new Parser({
   timeout: 10000,
   headers: {
-    'User-Agent': 'AI-Pathfinder/1.0'
+    'User-Agent': 'Pathify-AI/1.0'
   }
 })
 
@@ -59,7 +59,7 @@ async function fetchRSSFeed(feedUrl: string, source: NewsItem['source']): Promis
 async function fetchHackerNews(): Promise<NewsItem[]> {
   try {
     const response = await fetch(HN_API_URL, { 
-      headers: { 'User-Agent': 'AI-Pathfinder/1.0' }
+      headers: { 'User-Agent': 'Pathify-AI/1.0' }
     })
     
     if (!response.ok) {

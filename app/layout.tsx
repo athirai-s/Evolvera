@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 import AuthSessionProvider from '@/components/SessionProvider'
 
 export const metadata: Metadata = {
-  title: 'AI Pathfinder',
+  title: 'Pathify.ai',
   description: 'Find the perfect AI tools for your persona and profession',
 }
 

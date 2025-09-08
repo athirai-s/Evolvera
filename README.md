@@ -1,4 +1,4 @@
-# AI Pathfinder
+# Pathify.ai
 
 A minimalistic, attractive 3-step web app that helps users discover AI tools based on their persona and profession.
 

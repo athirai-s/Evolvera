@@ -11,7 +11,7 @@ export default function Header() {
       <div className="container mx-auto max-w-7xl px-4 py-6">
         <nav className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:from-purple-700 hover:to-pink-700 transition-all duration-200">
-            🧭 AI Pathfinder
+            🚀 Pathify.ai
           </Link>
           <div className="flex items-center space-x-6">
             {session && (

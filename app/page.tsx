@@ -38,7 +38,7 @@ export default function HomePage() {
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-12">
           <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
-            🚀 AI Pathfinder
+            🚀 Pathify.ai
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-4">
             Discover the Perfect AI Tools for Your Journey
