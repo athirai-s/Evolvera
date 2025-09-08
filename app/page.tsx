@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function HomePage() {
   const { data: session, status } = useSession()
@@ -37,9 +38,15 @@ export default function HomePage() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
-            🚀 Pathify.ai
-          </h1>
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/logo.png"
+              alt="Pathify.ai"
+              width={120}
+              height={120}
+              className="h-24 md:h-32 w-auto"
+            />
+          </div>
           <p className="text-xl md:text-2xl text-gray-600 mb-4">
             Discover the Perfect AI Tools for Your Journey
           </p>

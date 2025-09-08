@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
 
 export default function Header() {
@@ -10,8 +11,14 @@ export default function Header() {
     <header className="border-b border-purple-100 bg-white/70 backdrop-blur-sm">
       <div className="container mx-auto max-w-7xl px-4 py-6">
         <nav className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:from-purple-700 hover:to-pink-700 transition-all duration-200">
-            🚀 Pathify.ai
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity duration-200">
+            <Image
+              src="/logo.png"
+              alt="Pathify.ai"
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+            />
           </Link>
           <div className="flex items-center space-x-6">
             {session && (
